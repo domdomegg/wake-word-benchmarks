@@ -27,7 +27,13 @@ jobs:
 
     - name: Run benchmark
       run: python benchmark.py
-        
+
+    - name: Upload ROC curves
+      uses: actions/upload-artifact@v4
+      with:
+        name: roc-curves
+        path: roc_curves.html
+
     - name: Check for uncommitted changes
       run: |
         if [[ -n $(git status --porcelain) ]]; then

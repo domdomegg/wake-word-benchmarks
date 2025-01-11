@@ -55,17 +55,13 @@ class WakeWordBenchmark:
         
         return results
 
-def create_plots():
+def plot_roc_curves(benchmarks):
+    """Create ROC curve plots from benchmark results."""
     # Create figures for both PNG and HTML outputs
     fig_png = go.Figure()
     fig_html = go.Figure()
     
-    colors = {'OpenWakeWordModel': '#1f77b4', 'MicroWakeWordModel': '#ff7f0e'}
-    
-    for Model in all_models:
-        print('Starting ' + Model.__name__ + ' benchmark...')
-        benchmark = WakeWordBenchmark(Model('alexa'), 'alexa')
-        
+    for model_name, benchmark in benchmarks.items():
         # Extract metrics for plotting
         frr = [r['false_reject_rate'] for r in benchmark.results]
         far = [r['false_accept_rate'] for r in benchmark.results]
@@ -87,15 +83,14 @@ def create_plots():
             fig.add_trace(go.Scatter(
                 x=far,
                 y=frr,
-                name=Model.__name__,
+                name=model_name,
                 mode='lines+markers',
-                line=dict(color=colors[Model.__name__]),
                 hovertext=hover_text if show_all_thresholds else None,
                 hoverinfo='text' if show_all_thresholds else 'none'
             ))
         
         # Print metrics for minimum point
-        print(f"\n{Model.__name__} Minimum Point (t={min_point['threshold']:.3f}):")
+        print(f"\n{model_name} Minimum Point (t={min_point['threshold']:.3f}):")
         print(f"FRR: {min_point['frr']:.3f}, FAR: {min_point['far']:.3f}")
     
     # Configure layout for both plots
@@ -133,4 +128,9 @@ def create_plots():
     fig_html.write_html('roc_curves.html')
 
 if __name__ == '__main__':
-    create_plots()
+    benchmarks: dict[str, WakeWordBenchmark] = {}
+    for Model in all_models:
+        print('Starting ' + Model.__name__ + ' benchmark...')
+        benchmarks[Model.__name__] = WakeWordBenchmark(Model('alexa'), 'alexa')
+    
+    plot_roc_curves(benchmarks)

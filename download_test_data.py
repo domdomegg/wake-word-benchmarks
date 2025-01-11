@@ -37,7 +37,7 @@ def download_common_voice(max_samples: Optional[int] = None):
     """Download and process Common Voice delta dataset."""
     api_url = "https://commonvoice.mozilla.org/api/v1/bucket/dataset/cv-corpus-19.0-delta-2024-09-13%2Fcv-corpus-19.0-delta-2024-09-13-en.tar.gz"
     output_dir = Path("data", "negative_samples")
-    output_dir.mkdir(exist_ok=True)
+    output_dir.mkdir(parents=True, exist_ok=True)
     
     print("\nFetching Common Voice download URL...")
     req = urllib.request.Request(api_url)
@@ -92,7 +92,7 @@ def download_wake_word_samples():
         zip_ref.extractall()
     
     # Create output directory
-    output_dir.mkdir(exist_ok=True)
+    output_dir.mkdir(parents=True, exist_ok=True)
     
     # Move wake word sample folders directly
     print("\nMoving wake word samples...")

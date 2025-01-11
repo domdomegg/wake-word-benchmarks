@@ -1,6 +1,8 @@
 # Wake Word Benchmark
 
-Benchmark tool to compare the performance of openWakeWord wake word detection systems.
+Benchmark tool to compare the performance of wake word detection systems.
+
+By default, it benchmarks the 'alexa' models of openWakeWord and microWakeWord:
 
 ![Results displayed on a graph](./roc_curves.png)
 
