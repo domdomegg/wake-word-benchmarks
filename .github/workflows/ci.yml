@@ -27,3 +27,12 @@ jobs:
 
     - name: Run benchmark
       run: python benchmark.py
+        
+    - name: Check for uncommitted changes
+      run: |
+        if [[ -n $(git status --porcelain) ]]; then
+          echo "Error: There are uncommitted changes after running the workflow:"
+          git status
+          git diff
+          exit 1
+        fi

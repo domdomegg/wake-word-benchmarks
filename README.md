@@ -2,6 +2,8 @@
 
 Benchmark tool to compare the performance of openWakeWord wake word detection systems.
 
+![Results displayed on a graph](./roc_curves.png)
+
 ## Requirements
 
 - ffmpeg (for audio conversion)
