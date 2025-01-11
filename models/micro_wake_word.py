@@ -1,38 +1,14 @@
 import numpy as np
-from typing import Dict, List, Tuple
-from abc import ABC, abstractmethod
-import openwakeword
-from openwakeword.model import Model as OWWModel
-from openwakeword.utils import download_models
 import tensorflow as tf
 from tensorflow.lite.experimental.microfrontend.python.ops import audio_microfrontend_op as frontend_op
 import os
 import urllib.request
+from .base import WakeWordModel
 
-class OpenWakeWordModel:    
-    def __init__(self, model_name: str):
-        print("Downloading pre-trained " + model_name + " model (if not present)...")
-        download_models(model_names=[model_name])
-        print("Starting pre-trained " + model_name + " model...")
-        self.model_name = model_name
-        self.model = OWWModel(inference_framework="onnx", wakeword_models=[model_name])
-    
-    def predict_clip(self, clip: np.ndarray) -> list[float]:
-        """Process frames of a wav file."""
-        self.model.reset()
-        predictions = self.model.predict_clip(clip)
-        return [p[self.model_name] for p in predictions]
-
-class MicroWakeWordModel:    
+class MicroWakeWordModel(WakeWordModel):    
     def __init__(self, model_name: str = 'alexa'):
-        """Initialize the model with the given TFLite model path.
-        
-        Args:
-            model_path: Path to the TFLite model file. If using the default model and
-                       it doesn't exist, it will be downloaded automatically.
-        """
         self.model_name = model_name
-        self.model_path = os.path.abspath(os.path.join('models', 'microWakeWord', model_name + '.tflite'))
+        self.model_path = os.path.abspath(os.path.join('data', 'microWakeWord', model_name + '.tflite'))
         self._download_model()
         
         self.interpreter = tf.lite.Interpreter(model_path=self.model_path)
@@ -82,14 +58,6 @@ class MicroWakeWordModel:
         return features
     
     def predict_clip(self, clip: np.ndarray) -> list[float]:
-        """Process frames of audio and return predictions.
-        
-        Args:
-            clip: Raw audio samples as int16 numpy array at 16kHz.
-            
-        Returns:
-            List of prediction scores between 0 and 1 for each processed window.
-        """
         # Process audio into features
         features = self._process_audio(clip)
         

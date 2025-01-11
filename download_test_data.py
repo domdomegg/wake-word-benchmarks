@@ -36,7 +36,7 @@ def convert_mp3_to_wav(input_path, output_path):
 def download_common_voice(max_samples: Optional[int] = None):
     """Download and process Common Voice delta dataset."""
     api_url = "https://commonvoice.mozilla.org/api/v1/bucket/dataset/cv-corpus-19.0-delta-2024-09-13%2Fcv-corpus-19.0-delta-2024-09-13-en.tar.gz"
-    output_dir = Path("negative_samples")
+    output_dir = Path("data", "negative_samples")
     output_dir.mkdir(exist_ok=True)
     
     print("\nFetching Common Voice download URL...")
@@ -83,7 +83,7 @@ def download_wake_word_samples():
     url = "https://github.com/domdomegg/picovoice-wake-word-benchmark/archive/master.zip"
     zip_path = Path("wake-word-benchmark.zip")
     repo_dir = Path("picovoice-wake-word-benchmark-master")
-    output_dir = Path("positive_samples")
+    output_dir = Path("data", "positive_samples")
     
     download_url("wake word samples", url, zip_path)
     
@@ -125,8 +125,8 @@ def main():
     
     print("\nDownload complete!")
     print("\nTest data organization:")
-    print("- positive_samples/: Wake word samples (alexa, computer, jarvis, smart_mirror, snowboy, view_glass)")
-    print("- negative_samples/common_voice/: Background speech from Common Voice delta dataset")
+    print("- data/positive_samples/: Wake word samples (alexa, computer, jarvis, smart_mirror, snowboy, view_glass)")
+    print("- data/negative_samples/common_voice/: Background speech from Common Voice delta dataset")
     print("\nAll audio files are 16-bit 16kHz WAV format")
 
 if __name__ == "__main__":

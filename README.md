@@ -42,3 +42,15 @@ The benchmark uses real test data from established sources:
 
 1. **False Accept Rate**: How often the system incorrectly activates
 2. **False Reject Rate**: How often it misses the wake word
+
+## Adding New Models
+
+The benchmark can be extended to test additional wake word models. To do this:
+
+1. Create a new file in the `models/` directory (e.g. `models/my_model.py`)
+2. Implement a class that inherits from [`WakeWordModel`](./models/base.py).
+   This includes the `predict_clip` method that:
+   - Takes raw audio samples as a numpy array (16kHz, int16)
+   - Returns a list of prediction scores between 0-1 for each window
+
+For an example, see the [open_wake_word.py](./models/open_wake_word.py) implementation.

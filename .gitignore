@@ -38,8 +38,6 @@ ENV/
 Thumbs.db
 
 # Model and recording files
-negative_samples
-positive_samples
-models
+data
 venv
 wake-word-benchmark.zip
