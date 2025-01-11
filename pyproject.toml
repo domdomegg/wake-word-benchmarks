@@ -2,7 +2,7 @@
 name = "wake-word-benchmarks"
 version = "0.1.0"
 readme = "README.md"
-requires-python = ">=3.8,<3.13"
+requires-python = ">=3.8,<3.12"
 license = { text = "MIT" }
 dependencies = [
     "tensorflow==2.18.0",
@@ -12,9 +12,6 @@ dependencies = [
     "tqdm==4.67.1",
     "onnxruntime==1.20.1"
 ]
-
-[tool.setuptools.dependency-overrides]
-"tflite-runtime" = { version = "*", markers = "False" }
 
 [build-system]
 requires = ["setuptools>=61.0"]

@@ -5,7 +5,7 @@ Benchmark tool to compare the performance of openWakeWord wake word detection sy
 ## Requirements
 
 - ffmpeg (for audio conversion)
-- Python 3.8-3.12 (for Tensorflow support)
+- Python 3.8-3.11 (for Tensorflow support)
 
 ## Setup
 
